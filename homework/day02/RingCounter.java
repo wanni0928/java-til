@@ -19,8 +19,8 @@ public class RingCounter {
 
         // moduls는 해당 연산자의 피연산자가 더 크면 본래 값이 그대로 출력되는 성질을 이용해서
         // 아무리 피연산자가 증가해도 일정 횟수마다 순환하는 피연산자를 구현할 수 있다.
-        int result = numBits << numCount % numBits;
-
+        int result = 1 << numCount % numBits;
+        
         System.out.printf("Result : %d", result);
     }
 }
