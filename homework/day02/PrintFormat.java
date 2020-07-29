@@ -38,13 +38,13 @@ public class PrintFormat {
         String s1 = scanner.nextLine();
         String s2 = null;
         if(s1.length() > 5){
-            System.out.println("병명의 입력범위를 초과하였습니다. 다시 실행해서 입력해수제요.");
+            System.out.println("병명의 입력범위를 초과하였습니다. 다시 실행해서 입력해주세요.");
             System.exit(0);
         }else{
             System.out.println("환자의 비고 사항을 입력하세요.(10자 이하로 입력해주세요.)");
             s2 = scanner.nextLine();
             if(s2.length() > 10){
-                System.out.println("비고사항의 입력범위를 초과하였습니다. 다시 실행해서 입력해수제요.");
+                System.out.println("비고사항의 입력범위를 초과하였습니다. 다시 실행해서 입력해주세요.");
                 System.exit(0);
             }else{
                 System.out.println("*----------*--------*---------------*");
