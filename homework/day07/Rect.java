@@ -69,11 +69,12 @@ public class Rect extends RectCore {
      *  |              | |         | +  |     |
      *  | sin90  cos90 | |y - baseY|    |baseY|
      *
-     *  x -> cos90 * (x - baseX) + (-sin90 * (y - baaseY))
-     *  y -> sin90 * (x - baseX) + (cons90 * (y - baseY))
+     *  x -> cos90 * (x - baseX) + (-sin90 * (y - baaseY)) +base X
+     *  y -> sin90 * (x - baseX) + (cons90 * (y - baseY)) + baseY
      */
+    
     public void rot90(Vector2D pivot) {
-        this.pos.x = (float) (Math.cos(Math.PI / 2) * (this.pos.x - pivot.x) + Math.sin(Math.PI / 2) * (this.pos.y - pivot.y) + pivot.x);
+        this.pos.x = (float) (Math.cos(Math.PI / 2) * (this.pos.x - pivot.x)  + (-Math.sin(Math.PI / 2) * (this.pos.y - pivot.y)) + pivot.x);
         this.pos.y = (float) (Math.sin(Math.PI / 2) * (this.pos.x - pivot.x) + Math.cos(Math.PI / 2) * (this.pos.y - pivot.y) + pivot.y);
     }
 
