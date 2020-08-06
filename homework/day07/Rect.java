@@ -72,14 +72,14 @@ public class Rect extends RectCore {
      *  x -> cos90 * (x - baseX) + (-sin90 * (y - baaseY)) +base X
      *  y -> sin90 * (x - baseX) + (cons90 * (y - baseY)) + baseY
      */
-    
+
     public void rot90(Vector2D pivot) {
         this.pos.x = (float) (Math.cos(Math.PI / 2) * (this.pos.x - pivot.x)  + (-Math.sin(Math.PI / 2) * (this.pos.y - pivot.y)) + pivot.x);
         this.pos.y = (float) (Math.sin(Math.PI / 2) * (this.pos.x - pivot.x) + Math.cos(Math.PI / 2) * (this.pos.y - pivot.y) + pivot.y);
     }
 
     public String toString() {
-        return Arrays.toString(this.getAllPoints());
+        return String.format("(%f, %f) w : %f, h: %f", this.pos.x, this.pos.y, this.w, this.h);
     }
 }
 
@@ -92,5 +92,10 @@ class RectTest {
 
         rect.rot90(new Vector2D(0.4f, 0.2f));
         System.out.println("Rotated rect: " + rect);
+
+        // test after rotate
+//        System.out.println("Area: " + rect.getArea());
+//        System.out.println("CoM: " + rect.getCenterOfMass());
+//        System.out.println("All Points: " + Arrays.toString(rect.getAllPoints()));
     }
 }
