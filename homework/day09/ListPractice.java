@@ -71,41 +71,49 @@ class IntArrayList implements List {
 
     @Override
     public void insert(int index, int value) {
-        if(capacity == lastIndex){
-            if(capacity == 0){
-                capacity++;
-            }
-            int[] new_array = new int[capacity * 2];
-            System.arraycopy(array, 0, new_array, 0, array.length);
-            array = new_array;
-            capacity *= 2;
-        }
-        for (int i = index; i < array.length - 1; i++) {
-            if(index == 0){
-                prepend(value);
-                return;
-            }
-            array[i] = array[i+1];
-        }
-        array[index] = value;
-        lastIndex++;
+       if(capacity > index){
+           if(capacity == lastIndex){
+               if(capacity == 0){
+                   capacity++;
+               }
+               int[] new_array = new int[capacity * 2];
+               System.arraycopy(array, 0, new_array, 0, array.length);
+               array = new_array;
+               capacity *= 2;
+           }
+           for (int i = index; i < array.length - 1; i++) {
+               if(index == 0){
+                   prepend(value);
+                   return;
+               }
+               array[i] = array[i+1];
+           }
+           array[index] = value;
+           lastIndex++;
+       }else {
+           System.out.println("Out of Boundary, your idx : " + index);
+       }
     }
 
     @Override
     public void remove(int index) {
-        for (int i = index; i < array.length - 1; i++) {
-            array[i] = array[i + 1];
+        if(capacity > index){
+            for (int i = index; i < array.length - 1; i++) {
+                array[i] = array[i + 1];
+            }
+            int[] new_array = new int[capacity - 1];
+            System.arraycopy(array, 0, new_array, 0, array.length - 1);
+            array = new_array;
+            lastIndex--;
+            capacity -= 1;
+        }else{
+            System.out.println("Out of Boundary, your idx : " + index);
         }
-        int[] new_array = new int[capacity - 1];
-        System.arraycopy(array, 0, new_array, 0, array.length - 1);
-        array = new_array;
-        lastIndex--;
-        capacity -= 1;
     }
 
     @Override
     public int get(int index) {
-        return array[index];
+        return capacity > index ? array[index] : -1;
     }
 
     @Override
@@ -130,11 +138,11 @@ public class ListPractice {
         IntArrayList arrayList = new IntArrayList(10);
         //Append test
 //        System.out.println("Prepend Test");
-//        for (int i = 0; i < 40; i++) {
-//            arrayList.append(i+1);
-//            System.out.println(arrayList.toString());
-//        }
-//        arrayList.length();
+        for (int i = 0; i < 40; i++) {
+            arrayList.append(i+1);
+            System.out.println(arrayList.toString());
+        }
+        arrayList.length();
 
         //Prepend test
 //        System.out.println("Prepend Test");
@@ -156,12 +164,15 @@ public class ListPractice {
 //        arrayList.length();
 
         //Remove Test
-//        arrayList.remove(3);
-//        System.out.println(arrayList.toString());
-//        arrayList.length();
-//        arrayList.remove(5);
-//        System.out.println(arrayList.toString());
-//        arrayList.length();
+        arrayList.remove(0);
+        System.out.println(arrayList.toString());
+        arrayList.length();
+        arrayList.remove(3);
+        System.out.println(arrayList.toString());
+        arrayList.length();
+        arrayList.remove(5);
+        System.out.println(arrayList.toString());
+        arrayList.length();
 
         //Get Test
 //        System.out.println(arrayList.toString());
