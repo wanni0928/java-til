@@ -79,11 +79,11 @@ class Player {
     Predicate<Item> checkItem = (paramItem) -> this.items.contains(paramItem);
 
     // 아이템 효과
-    Consumer<Item> blackPotion = effect -> attackPoint += attackPoint / effect.getItem();
+    Function<Item, Integer> blackPotion = effect -> attackPoint += attackPoint / effect.getItem();
 //    Consumer<Item> mushroom = effect -> this.currentWeapon.setWeapon(this.currentWeapon.getWeaponAttackPoint() + effect.getItem());
     Function<Item, Integer> mushroom = effect -> attackPoint += effect.getItem();
 //    Consumer<Item> whitePotion = effect -> this.currentWeapon.setWeapon(this.currentWeapon.getWeaponAttackPoint() + effect.getItem());
-    Consumer<Item> whitePotion = effect -> attackPoint += effect.getItem();
+    Function<Item, Integer> whitePotion = effect -> attackPoint += effect.getItem();
 
 
     // 아이템 사용여부 확인
@@ -104,7 +104,7 @@ class Player {
                     whitePotions.add(item);
                     break;
                 case BLACK_POTION:
-                    blackPotion.accept(item);
+                    blackPotion.apply(item);
                     break;
                 case MUSHROOM:
                     attackPoint = mushroom.apply(item);
@@ -114,7 +114,7 @@ class Player {
 
         if(whitePotions.size() != 0) {
             for (Item item : whitePotions) {
-                whitePotion.accept(item);
+                whitePotion.apply(item);
             }
         }
 
