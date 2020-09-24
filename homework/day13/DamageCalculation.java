@@ -160,7 +160,6 @@ public class DamageCalculation {
         /** then*/
         // 아이템 중복사용 후 무기 교체해가며 공격력 확인하기
         System.out.println("아이템 효과 적용");
-        System.out.println(player.getAttackPoint());
 
         player.changeWeapon(Weapon.LONG_SWORD);
         System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
@@ -177,7 +176,6 @@ public class DamageCalculation {
         // 아이템 효과종료시키고 무기 교체해가면 공격력 확인하기
         System.out.println("아이템 효과 종료");
         player.resetItemEffects();
-        System.out.println(player.getAttackPoint());
 
         player.changeWeapon(Weapon.LONG_SWORD);
         System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
