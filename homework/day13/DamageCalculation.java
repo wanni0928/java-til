@@ -35,10 +35,6 @@ enum Weapon {
     public Integer getWeaponAttackPoint() {
         return weapon;
     }
-
-    public void setWeapon(Integer weapon) {
-        this.weapon = weapon;
-    }
 }
 
 enum Item {
@@ -79,7 +75,6 @@ class Player {
 
     // 아이템 사용
     Consumer<Item> useItem = item -> this.items.add(item);
-    Predicate<Item> checkItem = (paramItem) -> this.items.contains(paramItem);
 
     // 아이템 효과
     Function<Item, Integer> blackPotion = effect -> attackPoint += attackPoint / effect.getItem();
@@ -141,21 +136,59 @@ class Player {
         calculate.get();
         return attackPoint;
     }
+
+    // 아이템 효과 종료
+    void resetItemEffects() {
+        clearEffect.accept(items);
+    }
 }
 
 public class DamageCalculation {
     public static void main(String[] args) {
+
+        /** given*/
         // 무기 및 아이템 장착/사용 시나리오 및 플레이어 공격력 출력
         Player player = new Player();
 
+        /** when*/
         for (int i = 0; i < 2; i++) {
             player.useItem(Item.MUSHROOM);
             player.useItem(Item.BLACK_POTION);
             player.useItem(Item.WHITE_POTION);
         }
+        
+        /** then*/
+        // 아이템 중복사용 후 무기 교체해가며 공격력 확인하기
+        System.out.println("아이템 효과 적용");
+        System.out.println(player.getAttackPoint());
 
-        System.out.println(player.getAttackPoint());
         player.changeWeapon(Weapon.LONG_SWORD);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.DAGGER);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.DRAGON_SLAYER);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.BARE_HANDS);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        // 아이템 효과종료시키고 무기 교체해가면 공격력 확인하기
+        System.out.println("아이템 효과 종료");
+        player.resetItemEffects();
         System.out.println(player.getAttackPoint());
+
+        player.changeWeapon(Weapon.LONG_SWORD);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.DAGGER);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.DRAGON_SLAYER);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
+
+        player.changeWeapon(Weapon.BARE_HANDS);
+        System.out.println(player.currentWeapon + ": " + player.getAttackPoint());
     }
 }
