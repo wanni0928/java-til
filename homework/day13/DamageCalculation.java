@@ -72,7 +72,10 @@ class Player {
     // 무기 교체, 아이템 사용, 아이템 효과 종료 메소드 구현
 
     // 무기 교체
-    Consumer<Weapon> equipItem = weapon -> this.currentWeapon = weapon;
+    Consumer<Weapon> equipItem = weapon -> {
+        this.currentWeapon = weapon;
+        attackPoint = this.currentWeapon.getWeaponAttackPoint();
+    };
 
     // 아이템 사용
     Consumer<Item> useItem = item -> this.items.add(item);
@@ -80,9 +83,7 @@ class Player {
 
     // 아이템 효과
     Function<Item, Integer> blackPotion = effect -> attackPoint += attackPoint / effect.getItem();
-//    Consumer<Item> mushroom = effect -> this.currentWeapon.setWeapon(this.currentWeapon.getWeaponAttackPoint() + effect.getItem());
     Function<Item, Integer> mushroom = effect -> attackPoint += effect.getItem();
-//    Consumer<Item> whitePotion = effect -> this.currentWeapon.setWeapon(this.currentWeapon.getWeaponAttackPoint() + effect.getItem());
     Function<Item, Integer> whitePotion = effect -> attackPoint += effect.getItem();
 
 
@@ -124,7 +125,22 @@ class Player {
     // 공격력 계산
     Supplier<Integer> calculate = () -> findAnyItems.test(items) ? attackPointWithItemEffects.get() : attackPoint;
 
+    // 장비 바꾸기
+    void changeWeapon(Weapon weapon) {
+        equipItem.accept(weapon);
+        attackPoint = calculate.get();
+    }
 
+    // 아이템 사용하기
+    void useItem(Item item) {
+        useItem.accept(item);
+    }
+
+    // 공격력 출력하기
+    Integer getAttackPoint(){
+        calculate.get();
+        return attackPoint;
+    }
 }
 
 public class DamageCalculation {
@@ -132,13 +148,14 @@ public class DamageCalculation {
         // 무기 및 아이템 장착/사용 시나리오 및 플레이어 공격력 출력
         Player player = new Player();
 
-        for (int i = 0; i < 9999; i++) {
-            player.useItem.accept(Item.MUSHROOM);
+        for (int i = 0; i < 2; i++) {
+            player.useItem(Item.MUSHROOM);
+            player.useItem(Item.BLACK_POTION);
+            player.useItem(Item.WHITE_POTION);
         }
 
-        player.calculate.get();
-        System.out.println(player.attackPoint);
-        player.clearEffect.accept(player.items);
-        System.out.println(player.attackPoint);
+        System.out.println(player.getAttackPoint());
+        player.changeWeapon(Weapon.LONG_SWORD);
+        System.out.println(player.getAttackPoint());
     }
 }
